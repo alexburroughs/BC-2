@@ -45,19 +45,15 @@ int Arraylist_add(Arraylist* array, void* value)
 
 int Arraylist_set(Arraylist* array, void* value, int position)
 {
-    if (position > array->size) {
+    if (position > array->size)
         return -1;
-    }
 
-    if (position == array->size) {
+    if (position == array->size)
         ++array->size;
-    }
 
     if (array->size > array->max_size)
-    {
-        if (Arraylist_expand(array)) 
+        if (Arraylist_expand(array))
             return -1;
-    }
 
     array->arr[position] = value;
 
@@ -76,15 +72,13 @@ void* Arraylist_get(Arraylist* array, int position)
 int Arraylist_remove(Arraylist* array, int position)
 {
     
-    if (!ARRAYLIST_POSITION_IN_BOUNDS(position, array->size)) {
+    if (!ARRAYLIST_POSITION_IN_BOUNDS(position, array->size))
         return -1;
-    }
 
     array->free_ptr(array->arr[position]);
     
-    for (int i = position+1; i < array->size; i++) {
+    for (int i = position+1; i < array->size; i++)
         array->arr[i-1] = array->arr[i];
-    }
     
     --array->size;
 

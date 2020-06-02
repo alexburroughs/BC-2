@@ -35,7 +35,7 @@ int StringBuilder_add_arr(StringBuilder* sb, char* arr)
     
     sb->size += size;
 
-    if (sb->size >= sb->current_size)
+    while (sb->size >= sb->current_size)
         expand(sb);
 
     for (int i = 0; i < size; ++i) {

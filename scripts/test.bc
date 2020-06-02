@@ -1,0 +1,7 @@
+
+function main(iden : i32, str : char) -> i64
+{
+    if (iden >= 2) {
+        prnt("a");
+    }
+}

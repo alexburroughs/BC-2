@@ -58,9 +58,11 @@ Arraylist* tokenize(char* tokens)
         if (IS_WHITESPACE(tokens[pos])) {
             
             if (tokens[pos] == '\n') {
+                //Reset to 0
                 col = 0;
                 ++line;
             }
+            // Advance col to 1
             ADVANCE(1)
         }
         else if (IS_ALPHA(tokens[pos])) {
