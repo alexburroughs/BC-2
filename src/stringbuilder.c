@@ -55,6 +55,11 @@ char* StringBuilder_get(StringBuilder* sb)
     return ret;
 }
 
+void StringBuilder_clear(StringBuilder* sb)
+{
+    sb->size = 0;
+}
+
 void StringBuilder_free(StringBuilder* sb)
 {
     free(sb->str);

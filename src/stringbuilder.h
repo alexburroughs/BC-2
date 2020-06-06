@@ -17,6 +17,7 @@ StringBuilder* StringBuilder_new();
 int StringBuilder_add(StringBuilder* sb, char val);
 int StringBuilder_add_arr(StringBuilder* sb, char* arr);
 char* StringBuilder_get(StringBuilder* sb);
+void StringBuilder_clear(StringBuilder* sb);
 void StringBuilder_free(StringBuilder* sb);
 
 char* String_from(char* str);
