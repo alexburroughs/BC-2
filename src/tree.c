@@ -58,7 +58,25 @@ void GenericNode_free(GenericNode* gn)
     free(gn);
 }
 
-VariableNode* VariableNode_new(char* name, char* scope, Type type)
+void GenericNode_add_statement(GenericNode* gn, GenericNode* statement) 
+{    
+    switch(gn->type) {
+        case FunctionNode_t:
+            Arraylist_add(((FunctionNode*)gn->node)->statements, statement);
+            break;
+        case IfNode_t:
+            Arraylist_add(((IfNode*)gn->node)->statements, statement);
+            break;
+        case WhileNode_t:
+            Arraylist_add(((WhileNode*)gn->node)->statements, statement);
+            break;
+        default:
+            panic("Invalid scope");
+            break;
+    }
+}
+
+VariableNode* VariableNode_new(char* name, char* scope, char* type)
 {
     VariableNode* vn = malloc(sizeof(VariableNode));
 
@@ -99,6 +117,8 @@ FunctionNode* FunctionNode_new(char* name)
 
     fn->name = name;
     fn->statements = Arraylist_new(GenericNode_free);
+    fn->args = Arraylist_new(VariableNode_free);
+    fn->return_type = NULL;
 
     return fn;
 }
@@ -109,6 +129,16 @@ void FunctionNode_free(FunctionNode *fn)
         free(fn->name);
     Arraylist_free(fn->statements);
     free(fn);
+}
+
+void FunctionNode_add_arg(FunctionNode *fn, VariableNode *vn)
+{
+    Arraylist_add(fn->args, vn);
+}
+
+void FunctionNode_set_return(FunctionNode *fn, char* type)
+{
+    fn->return_type = type;
 }
 
 IfNode* IfNode_new(char* name, ExpressionNode* en)

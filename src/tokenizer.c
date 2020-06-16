@@ -215,6 +215,11 @@ Arraylist* tokenize(char* tokens)
                 Arraylist_add(token_list, Token_new(CloseBrace, NULL, line, col));
                 ADVANCE(1)
                 break;
+            case ',':
+                Arraylist_add(token_list, Token_new(Comma, NULL, line, col));
+                ADVANCE(1)
+                break;
+
             case '"': ;
                 StringBuilder* sb = StringBuilder_new();
                 ADVANCE(1)

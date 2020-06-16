@@ -37,6 +37,7 @@ enum tokentype
     Semicolon,
     Colon,
     Dot,
+    Comma,
     Arrow,
     I64,
     I32,

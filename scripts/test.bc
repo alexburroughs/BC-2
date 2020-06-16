@@ -1,7 +1,7 @@
 
-function main(iden : i32, str : char) -> i64
+function main(iden : String<i32>, str : char) : i64
 {
     if (iden >= 2) {
-        prnt("a");
+        print("hello world");
     }
 }
