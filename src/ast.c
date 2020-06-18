@@ -25,8 +25,17 @@ tk = (Token*)Arraylist_get(list, position);
 #define IS_PROCESSING_ARG(state) \
 (state == arg_state_Comma || state == arg_state_Iden || state == arg_state_Colon)
 
+ExpressionNode* parse_expr() 
+{
+    ExpressionNode* ex = ExpressionNode_new();
+
+    return ex;
+}
+
 AST* AST_new()
 {
+
+
     AST* ast = (AST*)malloc(sizeof(AST));
 
     ast->functions = Hashmap_new(GenericNode_free);
@@ -46,7 +55,7 @@ AST* AST_from(Arraylist* list)
 
         StringBuilder* sb = StringBuilder_new();
         bool in_func = false;
-        Stack* scope = Stack_new(free);
+        Stack* scope = Stack_new(GenericNode_free);
         last = tk;
         tk = (Token*)Arraylist_get(list, position);
 
@@ -55,15 +64,17 @@ AST* AST_from(Arraylist* list)
                 // No lambdas for now
                 if (in_func)
                     UNEXPECTED("function declaration", tk->line, tk->column)
+                in_func = true;
 
                 ADVANCE_TOKEN()
                 if (tk->type != Identifier)
                     UNEXPECTED("token", tk->line, tk->column)
                 if (tk->name == NULL)
                     COMPILER_PANIC(tk->line, tk->column)
-                Stack_push(scope, String_from(tk->name));
                 FunctionNode* fn = FunctionNode_new(tk->name);
-                Hashmap_insert(ast->functions, String_from(tk->name), GenericNode_new(FunctionNode_t, fn));
+                GenericNode* gn = GenericNode_new(FunctionNode_t, fn);
+                Hashmap_insert(ast->functions, String_from(tk->name), gn);
+                Stack_push(scope, gn);
                 in_func = true;
                 tk->name = NULL;
 
@@ -207,17 +218,30 @@ AST* AST_from(Arraylist* list)
                 else if (tk->type != OpenBrace) {
                     UNEXPECTED("token", tk->line, tk->column)
                 }
-
                 break;
             case If:
+                if (!in_func)
+                    UNEXPECTED("Statement must be in a function", tk->line, tk->column)
+                
+                ADVANCE_TOKEN()
+
+
                 break;
             case While:
+                if (!in_func)
+                    UNEXPECTED("Statement must be in a function", tk->line, tk->column)
                 break;
             case Else:
+                if (!in_func)
+                    UNEXPECTED("Statement must be in a function", tk->line, tk->column)
                 break;
-            case CloseBrace:
+            case CloseBrace: 
+                if (!in_func)
+                    UNEXPECTED("Statement must be in a function", tk->line, tk->column)
                 break;
-            case Variable:
+            case Variable: 
+                if (!in_func)
+                    UNEXPECTED("Statement must be in a function", tk->line, tk->column)
                 break;
             default:
                 panic("Unexpected Token %s");

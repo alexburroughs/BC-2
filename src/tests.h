@@ -4,6 +4,7 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 #include "arraylist.h"
 #include "hashmap.h"
 #include "tokenizer.h"
@@ -62,11 +63,10 @@ bool Arraylist_test()
     assert_fail(Arraylist_remove(arr,  2) == 0, "remove, returned 0 on index out of bouds", &pass);
     
     //free
-
     Arraylist_free(arr);
 
     free(test_int);
-
+    
     return pass;
     
 }
@@ -104,17 +104,34 @@ bool Hashmap_tests()
 
 bool Tokenizer_tests()
 {
+    bool pass = true;
+    assert_begin();
+
     Arraylist *l = tokenize("function { } = if else 1321321321 \nhello = == != ; . -> if == \"string\" ");
     
-    printf("string: %s\n",((Token*)Arraylist_get(l, 7))->name);
+    assert_pass(strcmp(((Token*)Arraylist_get(l, 7))->name,"hello") == 0, "Name not tokenized properly", &pass);
 
-    for (int i = 0; i < Arraylist_size(l); ++i) {
-        printf("token: %i\n", (int)(((Token*)Arraylist_get(l, i))->type));
-    }
+    assert_pass((((Token*)Arraylist_get(l, 0))->type) == Function, "Function, Not tokenized properly", &pass);
+    assert_pass((((Token*)Arraylist_get(l, 1))->type) == OpenBrace, "OpenBrace, Not tokenized properly", &pass);
+    assert_pass((((Token*)Arraylist_get(l, 2))->type) == CloseBrace, "CloseBrace, Not tokenized properly", &pass);
+    assert_pass((((Token*)Arraylist_get(l, 3))->type) == Assign, "Assign, Not tokenized properly", &pass);
+    assert_pass((((Token*)Arraylist_get(l, 4))->type) == If, "If, Not tokenized properly", &pass);
+    assert_pass((((Token*)Arraylist_get(l, 5))->type) == Else, "Else, Not tokenized properly", &pass);
+    assert_pass((((Token*)Arraylist_get(l, 6))->type) == Number, "Number, Not tokenized properly", &pass);
+    assert_pass((((Token*)Arraylist_get(l, 7))->type) == Identifier, "Identifier, Not tokenized properly", &pass);
+    assert_pass((((Token*)Arraylist_get(l, 8))->type) == Assign, "Assign, Not tokenized properly", &pass);
+    assert_pass((((Token*)Arraylist_get(l, 9))->type) == Equal, "Equal, Not tokenized properly", &pass);
+    assert_pass((((Token*)Arraylist_get(l, 10))->type) == NotEqual, "NotEqual, Not tokenized properly", &pass);
+    assert_pass((((Token*)Arraylist_get(l, 11))->type) == Semicolon, "Semicolon, Not tokenized properly", &pass);
+    assert_pass((((Token*)Arraylist_get(l, 12))->type) == Dot, "Dot, Not tokenized properly", &pass);
+    assert_pass((((Token*)Arraylist_get(l, 13))->type) == Arrow, "Arrow, Not tokenized properly", &pass);
+    assert_pass((((Token*)Arraylist_get(l, 14))->type) == If, "If, Not tokenized properly", &pass);
+    assert_pass((((Token*)Arraylist_get(l, 15))->type) == Equal, "Equal, Not tokenized properly", &pass);
+    assert_pass((((Token*)Arraylist_get(l, 16))->type) == String, "String, Not tokenized properly", &pass);
 
     Arraylist_free(l);
 
-    return true;
+    return pass;
 }
 
 bool run_tests()

@@ -9,5 +9,8 @@ int main()
 {
     if (run_tests())
         printf("pass\n");
+    else
+        printf("fail\n");
+    
 }
 
