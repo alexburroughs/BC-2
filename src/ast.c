@@ -25,17 +25,94 @@ tk = (Token*)Arraylist_get(list, position);
 #define IS_PROCESSING_ARG(state) \
 (state == arg_state_Comma || state == arg_state_Iden || state == arg_state_Colon)
 
-ExpressionNode* parse_expr() 
-{
-    ExpressionNode* ex = ExpressionNode_new();
+#define IS_OPERATOR(type) \
+(type >= Add && type <= Divide) 
 
-    return ex;
+#define IS_BINARY_OPERATOR(type) \
+(type >= And && type <= Equal)
+
+int get_precedence(TokenType t, int line, int col)
+{
+    switch (t) {
+
+        case Add:
+        case Subtract:
+            return 1;
+        break;
+        case Multiply:
+        case Divide:
+            return 2;
+        break;
+        default:
+            UNEXPECTED("token in expression", line, col);
+        break;
+    }
+}
+
+ExpressionNode* parse_expr(Arraylist* list, int position) 
+{
+    ExpressionNode* expr = ExpressionNode_new();
+
+    Stack* scope_stack = (Stack*)Stack_new(free);
+    Token* tk = (Token*)Arraylist_get(list, position);
+
+    if (tk->type != OpenBrace)
+        UNEXPECTED("token", tk->line, tk->column)
+
+    Stack_push(scope_stack, tk);
+
+    ADVANCE_TOKEN()
+
+    while (Arraylist_size(scope_stack) > 0) {
+
+        if (tk->type == Identifier) {
+            Token* iden = tk;
+    
+            ADVANCE_TOKEN()
+
+            if (tk->type != OpenBracket) {
+                ExpressionNode_add(expr, GenericNode_new(VariableNode_t, VariableNode_new(tk->name, NULL, NULL)));
+            }
+        }
+
+        else if (IS_OPERATOR(tk->type)) {
+            ADVANCE_TOKEN()
+        }
+
+        else if (IS_BINARY_OPERATOR(tk->type)) {
+            ADVANCE_TOKEN()
+        }
+
+        else if (tk->type == Number) {
+
+            StringBuilder* sb = StringBuilder_new();
+
+            StringBuilder_add_arr(sb, tk->name);
+            
+            ADVANCE_TOKEN() 
+            
+            if (tk->type == Dot) {
+
+                StringBuilder_add(sb, '.');
+                ADVANCE_TOKEN()
+            
+                if (tk->type != Number)
+                    UNEXPECTED("token", tk->line, tk->column)
+            
+                StringBuilder_add_arr(sb, tk->name);
+                ADVANCE_TOKEN()
+            }
+
+            ExpressionNode_add(expr, GenericNode_new(LiteralNode_t, LiteralNode_new(StringBuilder_get(sb))));
+        }
+
+   }
+
+    return expr;
 }
 
 AST* AST_new()
 {
-
-
     AST* ast = (AST*)malloc(sizeof(AST));
 
     ast->functions = Hashmap_new(GenericNode_free);
@@ -73,14 +150,18 @@ AST* AST_from(Arraylist* list)
                     COMPILER_PANIC(tk->line, tk->column)
                 FunctionNode* fn = FunctionNode_new(tk->name);
                 GenericNode* gn = GenericNode_new(FunctionNode_t, fn);
+
                 Hashmap_insert(ast->functions, String_from(tk->name), gn);
                 Stack_push(scope, gn);
+
                 in_func = true;
                 tk->name = NULL;
 
                 ADVANCE_TOKEN()
+
                 if (tk->type != OpenBracket)
                     UNEXPECTED("token", tk->line, tk->column);
+                
                 ADVANCE_TOKEN()
 
                 enum arg_state {
@@ -222,9 +303,10 @@ AST* AST_from(Arraylist* list)
             case If:
                 if (!in_func)
                     UNEXPECTED("Statement must be in a function", tk->line, tk->column)
-                
+
                 ADVANCE_TOKEN()
 
+                IfNode* in = IfNode_new("", parse_expr(list, position));
 
                 break;
             case While:

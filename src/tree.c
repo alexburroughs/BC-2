@@ -3,16 +3,6 @@
 
 #include <stdlib.h>
 
-Tree* Tree_new()
-{
-
-}
-
-void Tree_free(Tree *tr)
-{
-
-}
-
 GenericNode* GenericNode_new(NodeType type, void* ptr)
 {
     GenericNode* gn = malloc(sizeof(GenericNode));
@@ -50,6 +40,11 @@ void GenericNode_free(GenericNode* gn)
     case CallNode_t:
         CallNode_free(gn->node);
         break;
+    case OperatorNode_t:
+        OperatorNode_free(gn->node);
+        break;
+    case LiteralNode_t:
+        LiteralNode_free(gn->node);
     default:
         panic("Invalid node, report bug: https://github.com/alexburroughs/BC-2/issues");
         break;
@@ -74,6 +69,18 @@ void GenericNode_add_statement(GenericNode* gn, GenericNode* statement)
             panic("Invalid scope");
             break;
     }
+}
+
+LiteralNode* LiteralNode_new(char* name)
+{
+    LiteralNode* ln = malloc(sizeof(LiteralNode));
+    ln->name = name;
+    return ln;
+}
+
+void LiteralNode_free(LiteralNode* ln) {
+    free(ln->name);
+    free(ln);
 }
 
 VariableNode* VariableNode_new(char* name, char* scope, char* type)
@@ -109,6 +116,23 @@ void ExpressionNode_free(ExpressionNode *en)
 {
     Arraylist_free(en->nodes);
     free(en);
+}
+
+void ExpressionNode_add(ExpressionNode *en, GenericNode *gn)
+{
+    Arraylist_add(en->nodes, gn);
+}
+
+OperatorNode* OperatorNode_new(OpType opt)
+{
+    OperatorNode *op = malloc(sizeof(OperatorNode));
+    op->op_t = opt;
+    return op;
+}
+
+void OperatorNode_free(OperatorNode* on)
+{
+    free(on);
 }
 
 FunctionNode* FunctionNode_new(char* name)

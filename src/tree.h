@@ -14,18 +14,30 @@ enum node_type
     WhileNode_t,
     DeclarationNode_t,
     AssignmentNode_t,
-    CallNode_t
+    CallNode_t,
+    OperatorNode_t,
+    LiteralNode_t
+};
+
+enum op_type
+{
+    Add_t,
+    Sub_t,
+    Mul_t,
+    Div_t,
+    And_t,
+    Or_t,
+    Greater_t,
+    Less_t,
+    GreaterEqual_t,
+    LessEqual_t,
+    NotEqual_t,
+    Not_t,
+    Equal_t,
 };
 
 typedef enum node_type NodeType;
-
-struct tree 
-{
-    void* val;
-    Hashmap* children;
-};
-
-typedef struct tree Tree;
+typedef enum op_type OpType;
 
 struct generic_node
 {
@@ -95,9 +107,18 @@ struct call_node
 };
 typedef struct call_node CallNode;
 
+struct operator_node
+{
+    OpType op_t;
+};
+typedef struct operator_node OperatorNode;
 
-Tree* Tree_new();
-void Tree_free(Tree *tr);
+struct literal_node
+{
+    char* name;
+};
+typedef struct literal_node LiteralNode;
+
 GenericNode* GenericNode_new(NodeType type, void* ptr);
 void GenericNode_free(GenericNode* gn);
 void GenericNode_add_statement(GenericNode* gn, GenericNode* statement);
@@ -119,5 +140,10 @@ AssignmentNode* AssignmentNode_new(char* left, ExpressionNode* right);
 void AssignmentNode_free(AssignmentNode *an);
 CallNode* CallNode_new(char* name);
 void CallNode_free(CallNode *cn);
+OperatorNode* OperatorNode_new(OpType opt);
+void OperatorNode_free(OperatorNode *op);
+void ExpressionNode_add(ExpressionNode *en, GenericNode *gn);
+LiteralNode* LiteralNode_new(char* name);
+void LiteralNode_free(LiteralNode* ln);
 
 #endif
