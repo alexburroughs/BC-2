@@ -1,0 +1,21 @@
+curl 'https://discord.com/api/v9/channels/792566165527330839/messages' \
+  -H 'authority: discord.com' \
+  -H 'accept: */*' \
+  -H 'accept-language: en-US,en;q=0.9' \
+  -H 'authorization: MjY3ODU3NTMzNjQzNzg0MTky.YUNBaQ.zFA0CLcIccAQ36fLpXiiZfJUAtk' \
+  -H 'content-type: application/json' \
+  -H 'cookie: _ga=GA1.2.1052848930.1600610093; __dcfduid=789f6f6001f611ecaddca1e0c0474401; __sdcfduid=789f6f6101f611ecaddca1e0c047440198de7bafdb7e64291502f2d32ea47e8a020d2c11d03c91a8c076ff8d9774099d; OptanonConsent=isIABGlobal=false&datestamp=Fri+Apr+15+2022+10%3A59%3A17+GMT-0400+(Eastern+Daylight+Time)&version=6.17.0&hosts=&landingPath=NotLandingPage&groups=C0001%3A1%2CC0002%3A1%2CC0003%3A1&AwaitingReconsent=false; locale=en-GB' \
+  -H 'origin: https://discord.com' \
+  -H 'referer: https://discord.com/channels/792566165095448629/792566165527330839' \
+  -H 'sec-ch-ua: " Not A;Brand";v="99", "Chromium";v="100", "Google Chrome";v="100"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "Windows"' \
+  -H 'sec-fetch-dest: empty' \
+  -H 'sec-fetch-mode: cors' \
+  -H 'sec-fetch-site: same-origin' \
+  -H 'user-agent: Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36' \
+  -H 'x-debug-options: bugReporterEnabled' \
+  -H 'x-discord-locale: en-GB' \
+  -H 'x-super-properties: eyJvcyI6IldpbmRvd3MiLCJicm93c2VyIjoiQ2hyb21lIiwiZGV2aWNlIjoiIiwiYnJvd3Nlcl91c2VyX2FnZW50IjoiTW96aWxsYS81LjAgKFdpbmRvd3MgTlQgNi4xOyBXaW42NDsgeDY0KSBBcHBsZVdlYktpdC81MzcuMzYgKEtIVE1MLCBsaWtlIEdlY2tvKSBDaHJvbWUvMTAwLjAuNDg5Ni4xMjcgU2FmYXJpLzUzNy4zNiIsImJyb3dzZXJfdmVyc2lvbiI6IjEwMC4wLjQ4OTYuMTI3Iiwib3NfdmVyc2lvbiI6IjciLCJyZWZlcnJlciI6Imh0dHBzOi8vbC5mYWNlYm9vay5jb20vIiwicmVmZXJyaW5nX2RvbWFpbiI6ImwuZmFjZWJvb2suY29tIiwicmVmZXJyZXJfY3VycmVudCI6IiIsInJlZmVycmluZ19kb21haW5fY3VycmVudCI6IiIsInJlbGVhc2VfY2hhbm5lbCI6InN0YWJsZSIsImNsaWVudF9idWlsZF9udW1iZXIiOjEyMzg4NywiY2xpZW50X2V2ZW50X3NvdXJjZSI6bnVsbH0=' \
+  --data-raw '{"content":"ok new message","nonce":"964541300634288131","tts":false}' \
+  --compressed

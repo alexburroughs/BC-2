@@ -1,0 +1,22 @@
+import sys
+
+function main() : void
+{
+	var tmp : char = "hi"
+	var num : i32 = (24/12+2)
+	print(num)
+	while (num > 0) {
+		print("success")
+		num = (num-1)
+	}
+	print4(tmp)
+}
+
+function print4(val : char) : void
+{
+	var counter : i32 = (0)
+	while (counter < 4) {
+		print(val)
+		counter = (counter + 1)
+	}
+}

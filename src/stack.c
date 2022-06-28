@@ -32,3 +32,7 @@ void Stack_free(Stack* stack)
 {
     Arraylist_free(stack);
 }
+
+void* Stack_peek(Stack* stack) {
+    return Arraylist_get(stack, stack->size-1);
+}

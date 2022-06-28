@@ -10,6 +10,8 @@
 #include "tokenizer.h"
 #include "token.h"
 #include "ast.h"
+#include "stringbuilder.h"
+#include "nonamegenerator.h"
 
 #define assert_begin() bool c = false
 #define assert(check, msg) if(!check) {printf("Assertion Error: %s\n", msg);}
@@ -134,9 +136,29 @@ bool Tokenizer_tests()
     return pass;
 }
 
+bool Expression_tests() {
+    int pos = 0;
+    Arraylist* expr = tokenize("((1 + var1) - vare * var2 == 5) {");
+    parse_expr(expr, &pos);
+    return true;
+}
+
+bool AST_gen_tests() {
+    Arraylist* tokens = tokenize("function hello() : i32 {\n if (1 == 1) {\n print(\"true\")\nvar tmp : char = \"hello\"; \n}\n}");
+    AST* ast = AST_from(tokens);
+    printf("AST_DONE\n");
+    char* gen = ast_to_nni(ast);
+    printf("%s\n", gen);
+    return true;
+}
+
 bool run_tests()
 {
-    return Arraylist_test() && Hashmap_tests() && Tokenizer_tests();
+    return Arraylist_test() 
+        && Hashmap_tests() 
+        && Tokenizer_tests() 
+        && Expression_tests()
+        && AST_gen_tests();
 }
 
 #endif

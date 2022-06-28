@@ -82,6 +82,16 @@ void* Hashmap_get(Hashmap* map, char* key)
     return NULL;
 }
 
+Hashmap_Node* Hashmap_iter_next(Hashmap_Node* node)
+{
+    return node->next;
+}
+
+Hashmap_Node* Hashmap_get_iter(Hashmap* map) 
+{
+    return map->first;
+}
+
 void Hashmap_free(Hashmap* map) 
 {
     

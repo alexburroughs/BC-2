@@ -1,0 +1,53 @@
+FS print
+SYS PRINT 0
+FE print
+
+FS inputstr
+CALL print 0
+NEW STR
+SYS IN 1
+FE inputstr 1
+
+FS inputint
+CALL print 0
+NEW NUM
+SYS IN 1
+FE inputint 1
+
+FS list
+NEW LIST
+FE list 0
+
+FS append
+LS_ADD 0 1
+FE append 0
+
+FS getnum
+NEW NUM
+LS_GET 0 1 2
+FE getnum 2
+
+FS getstr
+NEW STR
+LS_GET 0 1 2
+FE getstr 2
+FS main
+NEW STR
+NEW STR
+SET 1 STR "hello world!"
+CALL list
+SET 0 RET
+NEW STR
+NEW NUM
+SET 3 NUM 0
+CALL append 0 1
+SET 0 RET
+CALL append 0 1
+SET 0 RET
+NEW STR
+CALL getstr 0 3
+SET 4 RET
+CALL print 4
+ADDR main_END
+FE main
+CALL main

@@ -21,5 +21,7 @@ void StringBuilder_clear(StringBuilder* sb);
 void StringBuilder_free(StringBuilder* sb);
 
 char* String_from(char* str);
+char* String_from_int(int num);
+char* read_file(char* filename);
 
 #endif

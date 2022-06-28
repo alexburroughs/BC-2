@@ -1,0 +1,21 @@
+import sys
+
+function main() : void
+{
+	var in : i32 = (inputint("Enter a positive integer"))
+	var output : char = factorial(in)
+	print(output)
+}
+
+function factorial(num : i32) : i32
+{
+	if (num == 0) {
+		var output : i32 = (1)
+		output
+	}
+
+	var next : i32 = (num-1)
+	var tmp : i32 = (factorial(next))
+	tmp = (num*tmp)
+	tmp
+}

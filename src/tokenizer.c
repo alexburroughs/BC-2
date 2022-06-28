@@ -9,7 +9,7 @@
 #include <stdlib.h>
 
 #define UNEXPECTED_TOKEN(position) \
-panic("Unexpected token %c at line: %i:%i:%i", tokens[position], line, col, pos);
+panic("Unexpected token %i at line: %i:%i:%i", (int)tokens[position], line, col, pos);
 
 #define IS_NUMERIC(x) (x >= '0' && x <= '9')
 
@@ -38,9 +38,13 @@ if (tokens[position] == matcher) {\
 
 bool compare(char* str1, const char* str2, int pos)
 {
-    for (int i = 0; i < strlen(str2); ++i)
+    int i = 0;
+    for (; i < strlen(str2); ++i)
         if (str1[pos+i] != str2[i])
             return false;
+    if (strlen(str1) > strlen(str2) + pos && IS_ALPHANUMERIC(str1[pos+i])) {
+        return false;
+    }
     return true;
 }
 
@@ -82,12 +86,13 @@ Arraylist* tokenize(char* tokens)
             else COMPARE("f64", F64, NULL)
             else COMPARE("f32", F32, NULL)
             else COMPARE("char", Char, NULL)
+            else COMPARE("void", Void, NULL)
             else COMPARE("ptr", Ptr, NULL)
             else COMPARE("ref", Ref, NULL)
             else COMPARE("effect", Effect, NULL)
             else COMPARE("handle", Handle, NULL)
+            else COMPARE("import", Import, NULL)
             else {
-                
                 StringBuilder *sb = StringBuilder_new();
 
                 int i = 0;
@@ -98,8 +103,9 @@ Arraylist* tokenize(char* tokens)
                 }
 
                 ADVANCE(i)
+                
                 Arraylist_add(token_list, Token_new(Identifier, StringBuilder_get(sb), line, col));
-
+                
                 StringBuilder_free(sb);
             }
         }
@@ -150,7 +156,7 @@ Arraylist* tokenize(char* tokens)
                 else
                     Arraylist_add(token_list, Token_new(Subtract, NULL, line, col));
                 ADVANCE(1)
-                break;
+                break;               
             case '+':
                 Arraylist_add(token_list, Token_new(Add, NULL, line, col));
                 ADVANCE(1)

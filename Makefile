@@ -11,8 +11,9 @@ DEPS := $(OBJS:.o=.d)
 
 INC_DIRS := $(shell find $(SRC_DIRS) -type d)
 INC_FLAGS := $(addprefix -I,$(INC_DIRS))
+LDFLAGS := -lm -luuid
 
-CFLAGS ?= $(INC_FLAGS) -MMD -MP --std=c99
+CFLAGS ?= $(INC_FLAGS) -MMD -MP --std=c99 -luuid
 # List of external libraries.
 
 $(BUILD_DIR)/$(TARGET_EXEC): $(OBJS)

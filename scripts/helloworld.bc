@@ -1,0 +1,9 @@
+import sys
+
+function main() : i32
+{
+	if (1==1) {
+		print("hello world")
+		var tmp : char = "hi";
+	}
+}

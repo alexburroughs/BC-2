@@ -10,5 +10,6 @@ int Stack_push(Stack* stack, void* val);
 void* Stack_pop(Stack* stack);
 void Stack_pop_and_free(Stack* stack);
 void Stack_free(Stack* stack);
+void* Stack_peek(Stack* stack);
 
 #endif

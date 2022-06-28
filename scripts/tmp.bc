@@ -1,0 +1,8 @@
+import sys
+
+function main() : void
+{
+    var tmp : char
+    var tmp2 : char
+	print(tmp, tmp2)
+}

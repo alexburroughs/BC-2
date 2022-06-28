@@ -1,0 +1,7 @@
+import sys
+
+function main() : i32
+{
+	var tmp : char = "hello world!";
+	print(tmp)
+}

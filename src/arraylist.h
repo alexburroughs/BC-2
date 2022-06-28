@@ -4,7 +4,7 @@
 #include <stdint.h>
 
 #define ARRAYLIST_DEFAULT_SIZE 100
-#define ARRAYLIST_DEFAULT_SCALE 1.5
+#define ARRAYLIST_DEFAULT_SCALE 2
 
 typedef void (*free_ptr_t)(void*);
 

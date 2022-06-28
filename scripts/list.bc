@@ -1,0 +1,18 @@
+import sys
+
+function main() : void 
+{
+    var tmp : char
+    var stri : char = "hello world!"
+    tmp = list()
+    var tmpva : char
+    var ind : i32 = (0)
+    tmp = append(tmp, stri)
+    tmp = append(tmp, stri)
+
+    var out : char
+    out = getstr(tmp, ind)
+    print(out)
+
+       
+}

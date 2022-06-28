@@ -25,9 +25,10 @@ typedef struct hashmap Hashmap;
 
 Hashmap* Hashmap_new(free_ptr_t free_ptr);
 int Hashmap_insert(Hashmap* map, char* key, void* val);
-int Hashmap_insert_or_set(Hashmap* map, 
-    char* key, void* val);
+int Hashmap_insert_or_set(Hashmap* map, char* key, void* val);
 void* Hashmap_get(Hashmap* map, char* key);
 void Hashmap_free(Hashmap* map);
+Hashmap_Node* Hashmap_iter_next(Hashmap_Node* node);
+Hashmap_Node* Hashmap_get_iter(Hashmap* map);
 
 #endif

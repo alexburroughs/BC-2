@@ -53,7 +53,9 @@ enum tokentype
     Ptr,
     Ref,
     Effect,
-    Handle
+    Handle,
+    Import,
+    Void
 };
 
 typedef enum tokentype TokenType;

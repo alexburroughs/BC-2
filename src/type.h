@@ -11,9 +11,10 @@ enum type
     U32_t,
     U16_t,
     U8_t,
-    Char_t,
     F64_t,
-    F32_t
+    F32_t,
+    Char_t,
+    Void_t
 };
 
 typedef enum type Type;
